@@ -1,22 +1,23 @@
 import { Link } from 'react-router-dom'
-import { useApi } from '../hooks/useApi'
-import { searchPageLoader } from '../pages/SearchPage'
+import { BookSearchType, useApi } from '../hooks/useApi'
 import { BookCover } from './BookCover'
 
-export const SearchResults = ({
-  query,
-}: ReturnType<typeof searchPageLoader>) => {
-  const { data, isLoading, error } = useApi({ query })
+export const SearchResults = ({ query }: { query: string }) => {
+  const {
+    data = { items: [] },
+    isLoading,
+    error,
+  } = useApi<BookSearchType>({ type: 'search', query })
 
   if (error) return <p>{error}</p>
 
   if (isLoading) return <p>Buscando por &quot;{query}&quot;...</p>
 
-  if (data.totalItems === 0) return <p>Nenhum resultado!</p>
+  if (data && data.totalItems === 0) return <p>Nenhum resultado!</p>
 
   return (
     <ul className="flex flex-col gap-2 p-2">
-      {data.items.map((item) => (
+      {data?.items.map((item) => (
         <li key={item.id}>
           <Link
             to={`/livro/${item.id}`}

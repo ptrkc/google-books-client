@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { HomeSearch } from './components/HomeSearch'
-import { BookPage } from './pages/BookPage'
+import { BookPage, bookPageLoader } from './pages/BookPage'
 import { ErrorPage } from './pages/ErrorPage'
 import { HomePage } from './pages/HomePage'
 import { FavoritesPage } from './pages/FavoritesPage'
@@ -20,6 +20,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'livro/:id',
+        loader: bookPageLoader,
         element: <BookPage />,
       },
       {
