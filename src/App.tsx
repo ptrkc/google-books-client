@@ -4,7 +4,7 @@ import { BookPage } from './pages/BookPage'
 import { ErrorPage } from './pages/ErrorPage'
 import { HomePage } from './pages/HomePage'
 import { FavoritesPage } from './pages/FavoritesPage'
-import { loader as searchLoader, SearchPage } from './pages/SearchPage'
+import { SearchPage, searchPageLoader } from './pages/SearchPage'
 
 const router = createBrowserRouter([
   {
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
       { index: true, element: <HomeSearch /> },
       {
         path: 'busca',
-        loader: searchLoader,
+        loader: searchPageLoader,
         element: <SearchPage />,
       },
       {

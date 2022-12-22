@@ -24,7 +24,7 @@ const SearchInput = ({
         className="border"
         onChange={handleInputChange}
         value={searchText}
-        name="q"
+        name="query"
       />
     </Form>
   )
