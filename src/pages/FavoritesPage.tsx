@@ -1,3 +1,3 @@
-export function MyBooksPage() {
+export function FavoritesPage() {
   return <div>Meus livros!</div>
 }
