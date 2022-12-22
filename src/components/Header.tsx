@@ -1,44 +1,25 @@
-import { useState, ChangeEventHandler } from 'react'
-import { Form } from 'react-router-dom'
+import { PropsWithChildren } from 'react'
+import { NavLink as BaseNavLink } from 'react-router-dom'
 
-const useSearchBar = () => {
-  const [searchText, setSearchText] = useState('')
-
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setSearchText(event.target.value)
-  }
-
-  return { searchText, handleInputChange }
-}
-
-const SearchInput = ({
-  searchText,
-  handleInputChange,
-}: {
-  searchText: string
-  handleInputChange: ChangeEventHandler<HTMLInputElement>
-}) => {
+const NavLink = ({ to, children }: PropsWithChildren<{ to: string }>) => {
   return (
-    <Form action="/busca">
-      <input
-        className="border"
-        onChange={handleInputChange}
-        value={searchText}
-        name="q"
-      />
-    </Form>
+    <BaseNavLink
+      className={({ isActive }) => (isActive ? 'underline' : undefined)}
+      to={to}
+    >
+      {children}
+    </BaseNavLink>
   )
 }
 
 export function Header() {
-  const { searchText, handleInputChange } = useSearchBar()
-
   return (
-    <div className="flex justify-center items-center bg-blue-300 p-2">
-      <SearchInput
-        searchText={searchText}
-        handleInputChange={handleInputChange}
-      />
-    </div>
+    <header className="bg-blue-300">
+      <nav className="mx-auto max-w-lg flex justify-between items-center p-2 ">
+        <NavLink to="/">📚Home</NavLink>
+        <NavLink to="/favoritos">⭐Favoritos</NavLink>
+        <NavLink to="/busca">🔍Busca</NavLink>
+      </nav>
+    </header>
   )
 }

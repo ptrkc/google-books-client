@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { WelcomeText } from './components/WelcomeText'
+import { HomeSearch } from './components/HomeSearch'
 import { BookPage } from './pages/BookPage'
 import { ErrorPage } from './pages/ErrorPage'
 import { HomePage } from './pages/HomePage'
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     element: <HomePage />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <WelcomeText /> },
+      { index: true, element: <HomeSearch /> },
       {
         path: 'busca',
         loader: searchLoader,
