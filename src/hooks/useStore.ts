@@ -2,7 +2,7 @@ import create from 'zustand'
 import { persist } from 'zustand/middleware'
 import { Book } from '../types/Book'
 
-type Limit = 10 | 20 | 30 | 40
+export type Limit = 10 | 20 | 30 | 40
 
 export interface StoreState {
   limit: Limit

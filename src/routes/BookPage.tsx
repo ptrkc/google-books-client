@@ -1,5 +1,6 @@
 import { Link, LoaderFunctionArgs, useLoaderData } from 'react-router-dom'
 import { BookCover } from '../components/BookCover'
+import StarRating from '../components/StarRating'
 import { BookResponse } from '../types/BookResponse'
 import { fetchData } from '../utils/fetch'
 
@@ -42,16 +43,19 @@ const BookInfo = ({ data }: { data: BookResponse }) => {
         <p className="pb-4">
           <span>Autores: </span>
           {volumeInfo.authors?.length &&
-            volumeInfo.authors.map((author, index) => (
-              <Link
-                className="underline text-indigo-700"
-                key={author}
-                to={`/buscar?query=inauthor:${author}`}
-              >
-                {author}
-                {index + 1 < volumeInfo.authors?.length && ',  '}
-              </Link>
-            ))}
+            volumeInfo.authors.map((author, index) => {
+              const length = volumeInfo.authors?.length
+              return (
+                <Link
+                  className="underline text-indigo-700"
+                  key={author}
+                  to={`/buscar?query=inauthor:${author}`}
+                >
+                  {author}
+                  {length && index + 1 < length && ',  '}
+                </Link>
+              )
+            })}
           <p>
             <span>Editora: </span>
             {volumeInfo.publisher && (
@@ -67,6 +71,13 @@ const BookInfo = ({ data }: { data: BookResponse }) => {
           <p>
             <span>Publicação: </span>
             {volumeInfo.publishedDate}
+          </p>
+          <p>
+            <span>
+              Classificação:{' '}
+              <StarRating rating={volumeInfo.averageRating ?? 0} />(
+              {volumeInfo.ratingsCount ?? 0})
+            </span>
           </p>
         </p>
         <p>{description}</p>

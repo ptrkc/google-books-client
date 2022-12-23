@@ -6,6 +6,7 @@ import { BookCover } from './BookCover'
 import { Button } from './Button'
 import { IconButton } from './IconButton'
 import { StarIcon } from './Icons'
+import StarRating from './StarRating'
 
 export const BookCard = ({ item }: { item: Book }) => {
   const { isFavorite, toggleFavorite } = useStore(
@@ -36,7 +37,7 @@ export const BookCard = ({ item }: { item: Book }) => {
               `por ${item.volumeInfo.authors.join(', ')}`}
           </p>
           <p>
-            {item.volumeInfo.averageRating ?? 0} (
+            <StarRating rating={item.volumeInfo.averageRating ?? 0} /> (
             {item.volumeInfo.ratingsCount ?? 0})
           </p>
         </div>
