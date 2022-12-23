@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom'
 import { BookCover } from '../components/BookCover'
-import { useApi } from '../hooks/useApi'
 import { BookResponse } from '../types/BookResponse'
+import { fetchData } from '../utils/fetch'
 
 const removeCommonHTMLTags = (text: string) => {
   const filtered = text.replace(
@@ -11,20 +11,18 @@ const removeCommonHTMLTags = (text: string) => {
   return filtered.replace(/<li>/g, '• ')
 }
 
-export function bookPageLoader({ params }: LoaderFunctionArgs) {
+const API_URL = `${import.meta.env.VITE_API_URL}`
+
+export async function bookPageLoader({ params }: LoaderFunctionArgs) {
   const id = params.id
-  return { id }
+  if (id) {
+    const data = await fetchData<BookResponse>(`${API_URL}volumes/${id}`)
+    return data
+  }
+  return null
 }
 
-const BookInfo = ({ id }: { id: string }) => {
-  const { data, isLoading, error } = useApi<BookResponse>({ type: 'book', id })
-
-  if (error) return <p>{error}</p>
-
-  if (isLoading) return <p>Buscando por &quot;{id}&quot;...</p>
-
-  if (!data) return <p>Nenhum resultado!</p>
-
+const BookInfo = ({ data }: { data: BookResponse }) => {
   const description =
     (data.volumeInfo.description &&
       removeCommonHTMLTags(data.volumeInfo.description)) ||
@@ -52,11 +50,11 @@ const BookInfo = ({ id }: { id: string }) => {
 }
 
 export function BookPage() {
-  const { id } = useLoaderData() as ReturnType<typeof bookPageLoader>
+  const data = useLoaderData() as Awaited<ReturnType<typeof bookPageLoader>>
 
   return (
     <div className="flex flex-col justify-center items-center">
-      {!id ? <p>No id</p> : <BookInfo id={id} />}
+      {!data ? <p>No id</p> : <BookInfo data={data} />}
     </div>
   )
 }

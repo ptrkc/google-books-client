@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { HomeSearch } from './components/HomeSearch'
-import { BookPage, bookPageLoader } from './pages/BookPage'
-import { ErrorPage } from './pages/ErrorPage'
-import { HomePage } from './pages/HomePage'
-import { FavoritesPage } from './pages/FavoritesPage'
-import { SearchPage, searchPageLoader } from './pages/SearchPage'
+import { BookPage, bookPageLoader } from './routes/BookPage'
+import { ErrorPage } from './routes/ErrorPage'
+import { HomePage } from './routes/HomePage'
+import { FavoritesPage } from './routes/FavoritesPage'
+import { SearchPage, searchPageLoader } from './routes/SearchPage'
 
 const router = createBrowserRouter([
   {
