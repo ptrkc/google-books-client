@@ -43,6 +43,7 @@ export const BookCard = ({ item }: { item: Book }) => {
         </div>
         <div className="flex w-full justify-end items-end gap-2 p-1 md:flex-col lg:flex-row">
           <Button
+            aria-label={isFavorite ? 'Remover' : 'Favoritar'}
             className="hidden sm:inline"
             color={isFavorite ? 'red' : 'yellow'}
             icon={<StarIcon />}
@@ -51,6 +52,7 @@ export const BookCard = ({ item }: { item: Book }) => {
             {isFavorite ? 'Remover' : 'Favoritar'}
           </Button>
           <IconButton
+            aria-label={isFavorite ? 'Remover' : 'Favoritar'}
             className="sm:hidden"
             color={isFavorite ? 'yellow' : 'gray'}
             onClick={() => toggleFavorite(item)}
