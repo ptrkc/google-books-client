@@ -1,18 +1,18 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { HomeSearch } from './components/HomeSearch'
+import { SimpleSearchForm } from './components/SimpleSearchForm'
 import { BookPage, bookPageLoader } from './routes/BookPage'
 import { ErrorPage } from './routes/ErrorPage'
-import { HomePage } from './routes/HomePage'
+import { Layout } from './routes/Layout'
 import { FavoritesPage } from './routes/FavoritesPage'
 import { SearchPage, searchPageLoader } from './routes/SearchPage'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage />,
+    element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomeSearch /> },
+      { index: true, element: <SimpleSearchForm /> },
       {
         path: 'buscar',
         loader: searchPageLoader,

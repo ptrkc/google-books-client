@@ -1,6 +1,6 @@
 import { Link, LoaderFunctionArgs, useLoaderData } from 'react-router-dom'
 import { BookCover } from '../components/BookCover'
-import StarRating from '../components/StarRating'
+import { StarRating } from '../components/StarRating'
 import { BookResponse } from '../types/BookResponse'
 import { fetchData } from '../utils/fetch'
 

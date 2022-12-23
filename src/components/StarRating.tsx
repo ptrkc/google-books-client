@@ -1,4 +1,4 @@
-const StarRating = ({ rating }: { rating: number }) => {
+export const StarRating = ({ rating }: { rating: number }) => {
   const star = <span>⭐</span>
   const halfStar = (
     <span className="inline-block relative">
@@ -16,5 +16,3 @@ const StarRating = ({ rating }: { rating: number }) => {
     </span>
   )
 }
-
-export default StarRating
