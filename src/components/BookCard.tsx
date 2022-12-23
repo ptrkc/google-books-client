@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { useFavoriteStore } from '../hooks/useFavoriteStore'
+import { useStore } from '../hooks/useStore'
 import { Book } from '../types/Book'
 import { BookCover } from './BookCover'
 import { Button } from './Button'
@@ -8,7 +8,7 @@ import { IconButton } from './IconButton'
 import { StarIcon } from './Icons'
 
 export const BookCard = ({ item }: { item: Book }) => {
-  const { isFavorite, toggleFavorite } = useFavoriteStore(
+  const { isFavorite, toggleFavorite } = useStore(
     useCallback(
       (state) => ({
         toggleFavorite: state.toggleFavorite,
@@ -19,7 +19,7 @@ export const BookCard = ({ item }: { item: Book }) => {
   )
   return (
     <li className="bg-white flex border gap-2 p-2 w-full hover:border-gray-800 transition-[border] ">
-      <Link to={`/livro/${item.id}`}>
+      <Link className="grow-0 shrink-0" to={`/livro/${item.id}`}>
         <BookCover
           size="sm"
           imageLinks={item.volumeInfo.imageLinks}
@@ -40,10 +40,11 @@ export const BookCard = ({ item }: { item: Book }) => {
             {item.volumeInfo.ratingsCount ?? 0})
           </p>
         </div>
-        <div className="flex w-full justify-end items-end gap-2">
+        <div className="flex w-full justify-end items-end gap-2 p-1 md:flex-col lg:flex-row">
           <Button
             className="hidden sm:inline"
             color={isFavorite ? 'red' : 'yellow'}
+            icon={<StarIcon />}
             onClick={() => toggleFavorite(item)}
           >
             {isFavorite ? 'Remover' : 'Favoritar'}

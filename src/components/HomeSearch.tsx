@@ -1,18 +1,18 @@
 import { useState, ChangeEventHandler } from 'react'
 import { Form, useNavigation } from 'react-router-dom'
+import { StoreState, useStore } from '../hooks/useStore'
 import { Button } from './Button'
 import { SearchIcon } from './Icons'
 
 const useSearchBar = () => {
   const [searchText, setSearchText] = useState('')
-
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setSearchText(event.target.value)
   }
-
   return { searchText, handleInputChange }
 }
 
+const limitSelector = (state: StoreState) => state.limit
 const SearchInput = ({
   searchText,
   handleInputChange,
@@ -20,10 +20,12 @@ const SearchInput = ({
   searchText: string
   handleInputChange: ChangeEventHandler<HTMLInputElement>
 }) => {
+  const limit = useStore(limitSelector)
   const navigation = useNavigation()
+
   return (
     <Form
-      action="/busca"
+      action="/buscar"
       className="flex flex-col justify-center items-center gap-4"
     >
       <input
@@ -33,6 +35,8 @@ const SearchInput = ({
         name="query"
         placeholder="O Senhor dos Anéis"
       />
+      <input hidden type="search" name="page" defaultValue={1} />
+      <input hidden type="search" name="limit" defaultValue={limit} />
       <Button icon={<SearchIcon />} isLoading={navigation.state === 'loading'}>
         Buscar Livro
       </Button>

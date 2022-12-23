@@ -32,7 +32,7 @@ export function Button({
     <button
       onClick={onClick}
       className={cn(
-        'flex justify-center items-center rounded-xl font-semibold px-4 py-1 shadow-lg  active:shadow-none active:scale-95 focus:ring-2  focus:ring-offset-2  transition-[filter]',
+        'rounded-xl font-semibold px-4 py-1 shadow-lg  active:shadow-none active:scale-95 focus:ring-2  focus:ring-offset-2 transition-[filter]',
         !isLoading &&
           'disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed',
         iconToShow ? 'pl-2 pr-4' : 'px-6',
@@ -42,8 +42,12 @@ export function Button({
       disabled={disabled ?? isLoading}
       {...rest}
     >
-      {iconToShow && <span className="w-5 h-5 ml-2 mr-2">{iconToShow}</span>}
-      <span>{children}</span>
+      <div className="flex justify-center items-center">
+        {iconToShow && (
+          <span className="w-5 h-5 ml-2 mr-2 inline-block">{iconToShow}</span>
+        )}
+        <span>{children}</span>
+      </div>
     </button>
   )
 }

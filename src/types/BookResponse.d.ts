@@ -17,7 +17,7 @@ export interface SaleInfo {
 
 export interface VolumeInfo {
   title: string
-  authors: string[]
+  authors?: string[]
   publisher: string
   publishedDate: string
   description?: string

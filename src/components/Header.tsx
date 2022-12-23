@@ -21,7 +21,7 @@ export function Header() {
       <nav className="mx-auto max-w-lg flex justify-between items-center p-2 ">
         <NavLink to="/">📚Home</NavLink>
         <NavLink to="/favoritos">⭐Favoritos</NavLink>
-        <NavLink to="/busca">🔍Busca</NavLink>
+        <NavLink to="/buscar">🔍Buscar</NavLink>
       </nav>
     </header>
   )

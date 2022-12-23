@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomeSearch /> },
       {
-        path: 'busca',
+        path: 'buscar',
         loader: searchPageLoader,
         element: <SearchPage />,
       },

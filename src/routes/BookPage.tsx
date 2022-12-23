@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom'
+import { Link, LoaderFunctionArgs, useLoaderData } from 'react-router-dom'
 import { BookCover } from '../components/BookCover'
 import { BookResponse } from '../types/BookResponse'
 import { fetchData } from '../utils/fetch'
@@ -23,27 +23,53 @@ export async function bookPageLoader({ params }: LoaderFunctionArgs) {
 }
 
 const BookInfo = ({ data }: { data: BookResponse }) => {
+  const { volumeInfo } = data
   const description =
-    (data.volumeInfo.description &&
-      removeCommonHTMLTags(data.volumeInfo.description)) ||
+    (volumeInfo.description && removeCommonHTMLTags(volumeInfo.description)) ||
     'Sem descrição.'
+
   return (
     <div className="flex flex-col sm:flex-row p-2 gap-4">
       <div className="grow-0 shrink-0">
         <BookCover
           size="lg"
-          imageLinks={data.volumeInfo.imageLinks}
-          title={data.volumeInfo.title}
+          imageLinks={volumeInfo.imageLinks}
+          title={volumeInfo.title}
         />
       </div>
       <div>
-        <h2>{data.volumeInfo.title}</h2>
+        <h2>{volumeInfo.title}</h2>
         <p className="pb-4">
-          {data.volumeInfo.authors.length &&
-            `por ${data.volumeInfo.authors.join(', ')}`}{' '}
-          | {data.volumeInfo.publisher} | {data.volumeInfo.publishedDate}
+          <span>Autores: </span>
+          {volumeInfo.authors?.length &&
+            volumeInfo.authors.map((author, index) => (
+              <Link
+                className="underline text-indigo-700"
+                key={author}
+                to={`/buscar?query=inauthor:${author}`}
+              >
+                {author}
+                {index + 1 < volumeInfo.authors?.length && ',  '}
+              </Link>
+            ))}
+          <p>
+            <span>Editora: </span>
+            {volumeInfo.publisher && (
+              <Link
+                className="underline text-indigo-700"
+                key={volumeInfo.publisher}
+                to={`/buscar?query=inpublisher:${volumeInfo.publisher}`}
+              >
+                {volumeInfo.publisher}{' '}
+              </Link>
+            )}{' '}
+          </p>
+          <p>
+            <span>Publicação: </span>
+            {volumeInfo.publishedDate}
+          </p>
         </p>
-        <div>{description}</div>
+        <p>{description}</p>
       </div>
     </div>
   )

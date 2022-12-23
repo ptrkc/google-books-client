@@ -24,7 +24,7 @@ export function IconButton({
       type="button"
       onClick={onClick}
       className={cn(
-        'w-8 h-8 p-[6px] shadow-lg flex justify-center items-center rounded-full font-bold ',
+        'w-8 h-8 p-[6px] shadow-lg flex justify-center items-center rounded-full font-bold disabled:bg-gray-500 disabled:cursor-not-allowed',
         colors[color],
         className
       )}

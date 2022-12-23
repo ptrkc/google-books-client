@@ -3,8 +3,8 @@ import { cn } from '../utils/classnames'
 import { CameraOffIcon } from './Icons'
 
 const sizes = {
-  sm: 'min-w-[128px] min-h-[192px]',
-  lg: 'min-w-[128px] min-h-[192px] sm:w-[350px] sm:h-[580px]',
+  sm: 'w-[128px] h-[192px]',
+  lg: 'w-full h-[400px] sm:w-[350px] sm:h-[580px]',
 }
 
 export const BookCover = ({
@@ -24,10 +24,7 @@ export const BookCover = ({
     return (
       <img
         src={bestEfficientImage}
-        className={cn(
-          sizes[size],
-          'object-contain bg-gray-200 grow-0 shrink-0 text-sm p-2'
-        )}
+        className={cn(sizes[size], 'object-contain bg-gray-200 text-sm p-2')}
         alt={`Capa do livro "${title}"`}
       />
     )

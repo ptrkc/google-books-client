@@ -1,9 +1,9 @@
 import { BookGrid } from '../components/BookGrid'
-import { FavoriteState, useFavoriteStore } from '../hooks/useFavoriteStore'
+import { StoreState, useStore } from '../hooks/useStore'
 
-const favoritesSelector = (state: FavoriteState) => state.favorites
+const favoritesSelector = (state: StoreState) => state.favorites
 export function FavoritesPage() {
-  const favorites = useFavoriteStore(favoritesSelector)
+  const favorites = useStore(favoritesSelector)
   if (favorites.length === 0)
     return (
       <div className="p-2 flex flex-col gap-2">
