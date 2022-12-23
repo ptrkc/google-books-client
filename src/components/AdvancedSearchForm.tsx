@@ -1,10 +1,11 @@
-import { Form, useNavigation } from 'react-router-dom'
+import { Form, useNavigation, useSearchParams } from 'react-router-dom'
 import { StoreState, useStore } from '../hooks/useStore'
 import { Button } from './Button'
 import { SearchIcon } from './Icons'
 
 const limitSelector = (state: StoreState) => state.limit
 export const AdvancedSearchForm = () => {
+  const [searchParams, setSearchParams] = useSearchParams()
   const limit = useStore(limitSelector)
   const navigation = useNavigation()
 
@@ -19,7 +20,7 @@ export const AdvancedSearchForm = () => {
           className="border p-2 text-lg rounded"
           name="query"
           placeholder="O Senhor dos Anéis"
-          required={false}
+          defaultValue={searchParams.get('query') ?? ''}
         />
       </label>
       <label className="flex flex-col">
@@ -28,7 +29,7 @@ export const AdvancedSearchForm = () => {
           className="border p-2 text-lg rounded"
           name="author"
           placeholder="Tolkien"
-          required={false}
+          defaultValue={searchParams.get('author') ?? ''}
         />
       </label>
       <label className="flex flex-col">

@@ -34,7 +34,7 @@ export const BookCover = ({
     <div
       className={cn(
         sizes[size],
-        'flex justify-center items-center flex-none bg-gray-300'
+        'p-2 flex justify-center items-center  bg-gray-300'
       )}
     >
       <CameraOffIcon className="text-gray-600 w-10 h-10" />

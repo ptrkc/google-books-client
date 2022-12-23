@@ -30,14 +30,13 @@ const BookInfo = ({ data }: { data: BookResponse }) => {
     'Sem descrição.'
 
   return (
-    <div className="flex flex-col sm:flex-row p-2 gap-4">
-      <div className="grow-0 shrink-0">
-        <BookCover
-          size="lg"
-          imageLinks={volumeInfo.imageLinks}
-          title={volumeInfo.title}
-        />
-      </div>
+    <div className="flex flex-col sm:flex-row p-2 gap-4 w-full">
+      <BookCover
+        size="lg"
+        imageLinks={volumeInfo.imageLinks}
+        title={volumeInfo.title}
+      />
+      0{' '}
       <div>
         <h2>{volumeInfo.title}</h2>
         <p className="pb-4">
@@ -49,7 +48,7 @@ const BookInfo = ({ data }: { data: BookResponse }) => {
                 <Link
                   className="underline text-indigo-700"
                   key={author}
-                  to={`/buscar?query=inauthor:${author}`}
+                  to={`/buscar?author=${author}`}
                 >
                   {author}
                   {length && index + 1 < length && ',  '}
