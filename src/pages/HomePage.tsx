@@ -5,7 +5,7 @@ export function HomePage() {
   return (
     <div>
       <Header />
-      <main>
+      <main className="flex flex-col mx-auto max-w-6xl">
         <Outlet />
       </main>
     </div>

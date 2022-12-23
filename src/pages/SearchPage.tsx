@@ -10,9 +10,5 @@ export function searchPageLoader({ request }: LoaderFunctionArgs) {
 export function SearchPage() {
   const { query } = useLoaderData() as ReturnType<typeof searchPageLoader>
 
-  return (
-    <div className="flex flex-col justify-center items-center">
-      {!query ? <p>No query</p> : <SearchResults query={query} />}
-    </div>
-  )
+  return !query ? <p>No query</p> : <SearchResults query={query} />
 }
