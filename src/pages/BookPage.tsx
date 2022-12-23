@@ -1,5 +1,7 @@
 import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom'
-import { BookType, useApi } from '../hooks/useApi'
+import { BookCover } from '../components/BookCover'
+import { useApi } from '../hooks/useApi'
+import { BookResponse } from '../types/BookResponse'
 
 export function bookPageLoader({ params }: LoaderFunctionArgs) {
   const id = params.id
@@ -7,7 +9,7 @@ export function bookPageLoader({ params }: LoaderFunctionArgs) {
 }
 
 const BookInfo = ({ id }: { id: string }) => {
-  const { data, isLoading, error } = useApi<BookType>({ type: 'book', id })
+  const { data, isLoading, error } = useApi<BookResponse>({ type: 'book', id })
 
   if (error) return <p>{error}</p>
 
@@ -17,7 +19,11 @@ const BookInfo = ({ id }: { id: string }) => {
 
   return (
     <div>
-      <img src={data.volumeInfo.imageLinks.large} alt={data.volumeInfo.title} />
+      <BookCover
+        size="lg"
+        imageLinks={data.volumeInfo.imageLinks}
+        title={data.volumeInfo.title}
+      />
       <p>{data.volumeInfo.title}</p>
       <p>{data.volumeInfo.description}</p>
     </div>

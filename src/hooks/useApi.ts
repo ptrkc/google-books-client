@@ -2,61 +2,10 @@ import { useState, useEffect } from 'react'
 
 const API_URL = `${import.meta.env.VITE_API_URL}`
 
-export interface BookSearchType {
-  totalItems?: number
-  items: Item[]
-}
-
-interface Item {
-  id: string
-  volumeInfo: VolumeInfo
-}
-
-interface VolumeInfo {
-  title: string
-  authors: string[]
-  description?: string
-  pageCount: number
-  categories?: string[]
-  imageLinks?: ImageLinks
-}
-
-export interface ImageLinks {
-  smallThumbnail: string
-  thumbnail: string
-}
-
 interface SearchConfig {
   type: 'search'
   query: string
   id?: never
-}
-
-export interface BookType {
-  id: string
-  etag: string
-  selfLink: string
-  volumeInfo: BookVolumeInfo
-}
-
-interface BookVolumeInfo {
-  title: string
-  authors: string[]
-  publisher: string
-  publishedDate: string
-  description: string
-  pageCount: number
-  printedPageCount: number
-  imageLinks: BookImageLinks
-}
-
-interface BookImageLinks {
-  smallThumbnail: string
-  thumbnail: string
-  small: string
-  medium: string
-  large: string
-  extraLarge: string
 }
 
 interface BookConfig {
@@ -64,9 +13,9 @@ interface BookConfig {
   id: string
   query?: never
 }
-type ApiConfiguration = SearchConfig | BookConfig
+type ApiConfig = SearchConfig | BookConfig
 
-export const useApi = <T>(config: ApiConfiguration) => {
+export const useApi = <T>(config: ApiConfig) => {
   const { type } = config
   let params: string
   if (type === 'search') {
