@@ -36,10 +36,9 @@ const BookInfo = ({ data }: { data: BookResponse }) => {
         imageLinks={volumeInfo.imageLinks}
         title={volumeInfo.title}
       />
-      0{' '}
       <div>
         <h2>{volumeInfo.title}</h2>
-        <p className="pb-4">
+        <div className="pb-4">
           <span>Autores: </span>
           {volumeInfo.authors?.length &&
             volumeInfo.authors.map((author, index) => {
@@ -78,7 +77,7 @@ const BookInfo = ({ data }: { data: BookResponse }) => {
               {volumeInfo.ratingsCount ?? 0})
             </span>
           </p>
-        </p>
+        </div>
         <p>{description}</p>
       </div>
     </div>

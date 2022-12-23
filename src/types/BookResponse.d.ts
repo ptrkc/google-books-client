@@ -1,5 +1,6 @@
 export interface BookResponse {
   id: string
+  etag: string
   selfLink: string
   volumeInfo: VolumeInfo
   saleInfo: SaleInfo

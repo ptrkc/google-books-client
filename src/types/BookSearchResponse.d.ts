@@ -5,6 +5,7 @@ export interface BookSearchResponse {
 
 export interface Item {
   id: string
+  etag: string
   selfLink: string
   volumeInfo: VolumeInfo
 }

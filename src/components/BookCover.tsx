@@ -24,7 +24,10 @@ export const BookCover = ({
     return (
       <img
         src={bestEfficientImage}
-        className={cn(sizes[size], 'object-contain bg-gray-200 text-sm p-2')}
+        className={cn(
+          sizes[size],
+          'object-contain bg-gray-200 text-sm p-2 shrink-0'
+        )}
         alt={`Capa do livro "${title}"`}
       />
     )

@@ -18,7 +18,7 @@ export async function searchPageLoader({ request }: LoaderFunctionArgs) {
   const startIndex = page === 0 ? 0 : (page - 1) * limit
   if (query || author) {
     const queryData = query ?? ''
-    const authorData = author ? `inauthor:${author}}` : ''
+    const authorData = author ? `inauthor:${author}` : ''
     const data = await fetchData<BookSearchResponse>(
       `${API_URL}volumes?q=${queryData}${authorData}&startIndex=${startIndex}&maxResults=${limit}`
     )
