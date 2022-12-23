@@ -1,5 +1,7 @@
 import { useState, ChangeEventHandler } from 'react'
-import { Form } from 'react-router-dom'
+import { Form, useNavigation } from 'react-router-dom'
+import { Button } from './Button'
+import { SearchIcon } from './Icons'
 
 const useSearchBar = () => {
   const [searchText, setSearchText] = useState('')
@@ -18,14 +20,22 @@ const SearchInput = ({
   searchText: string
   handleInputChange: ChangeEventHandler<HTMLInputElement>
 }) => {
+  const navigation = useNavigation()
   return (
-    <Form action="/busca">
+    <Form
+      action="/busca"
+      className="flex flex-col justify-center items-center gap-4"
+    >
       <input
-        className="border"
+        className="border p-2 text-lg rounded"
         onChange={handleInputChange}
         value={searchText}
         name="query"
+        placeholder="O Senhor dos Anéis"
       />
+      <Button icon={<SearchIcon />} isLoading={navigation.state === 'loading'}>
+        Buscar Livro
+      </Button>
     </Form>
   )
 }

@@ -1,4 +1,5 @@
 import { ImageLinks } from '../types/BookResponse'
+import { cn } from '../utils/classnames'
 import { CameraOffIcon } from './Icons'
 
 const sizes = {
@@ -23,10 +24,10 @@ export const BookCover = ({
     return (
       <img
         src={bestEfficientImage}
-        className={[
+        className={cn(
           sizes[size],
-          'object-contain bg-gray-200 grow-0 shrink-0 text-sm p-2',
-        ].join(' ')}
+          'object-contain bg-gray-200 grow-0 shrink-0 text-sm p-2'
+        )}
         alt={`Capa do livro "${title}"`}
       />
     )
@@ -34,10 +35,10 @@ export const BookCover = ({
 
   return (
     <div
-      className={[
+      className={cn(
         sizes[size],
-        'flex justify-center items-center flex-none bg-gray-300',
-      ].join(' ')}
+        'flex justify-center items-center flex-none bg-gray-300'
+      )}
     >
       <CameraOffIcon className="text-gray-600 w-10 h-10" />
     </div>

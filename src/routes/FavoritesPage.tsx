@@ -7,7 +7,7 @@ export function FavoritesPage() {
   if (favorites.length === 0)
     return (
       <div className="p-2 flex flex-col gap-2">
-        <h2>⭐Favoritos</h2>
+        <h2>⭐Favoritos ({favorites.length})</h2>
         <p className="font-lg">
           Adicione livros aos seus favoritos para que eles apareçam aqui.
         </p>

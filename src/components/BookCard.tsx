@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useFavoriteStore } from '../hooks/useFavoriteStore'
 import { Book } from '../types/Book'
 import { BookCover } from './BookCover'
+import { Button } from './Button'
 
 export const BookCard = ({ item }: { item: Book }) => {
   const { isFavorite, toggleFavorite } = useFavoriteStore(
@@ -38,15 +39,15 @@ export const BookCard = ({ item }: { item: Book }) => {
           </p>
         </div>
         <div className="flex w-full justify-end items-end gap-2">
-          <button
-            className="font-bold rounded-md p-2 bg-yellow-500"
+          <Button
+            color={isFavorite ? 'red' : 'yellow'}
             onClick={() => toggleFavorite(item)}
           >
             {isFavorite ? 'Remover' : 'Favoritar'}
-          </button>
+          </Button>
           <Link
             to={`/livro/${item.id}`}
-            className="font-bold rounded-md p-2 bg-blue-500"
+            className="flex justify-center items-center rounded-xl font-semibold px-4 py-1 shadow-lg text-white active:shadow-none active:scale-95 focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 bg-indigo-500 transition-[filter] hover:bg-indigo-600"
           >
             Informações
           </Link>
