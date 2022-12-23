@@ -4,6 +4,8 @@ import { useFavoriteStore } from '../hooks/useFavoriteStore'
 import { Book } from '../types/Book'
 import { BookCover } from './BookCover'
 import { Button } from './Button'
+import { IconButton } from './IconButton'
+import { StarIcon } from './Icons'
 
 export const BookCard = ({ item }: { item: Book }) => {
   const { isFavorite, toggleFavorite } = useFavoriteStore(
@@ -40,11 +42,20 @@ export const BookCard = ({ item }: { item: Book }) => {
         </div>
         <div className="flex w-full justify-end items-end gap-2">
           <Button
+            className="hidden sm:inline"
             color={isFavorite ? 'red' : 'yellow'}
             onClick={() => toggleFavorite(item)}
           >
             {isFavorite ? 'Remover' : 'Favoritar'}
           </Button>
+          <IconButton
+            className="sm:hidden"
+            color={isFavorite ? 'yellow' : 'gray'}
+            onClick={() => toggleFavorite(item)}
+            icon={<StarIcon />}
+          >
+            {isFavorite ? 'Remover' : 'Favoritar'}
+          </IconButton>
           <Link
             to={`/livro/${item.id}`}
             className="flex justify-center items-center rounded-xl font-semibold px-4 py-1 shadow-lg text-white active:shadow-none active:scale-95 focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 bg-indigo-500 transition-[filter] hover:bg-indigo-600"
