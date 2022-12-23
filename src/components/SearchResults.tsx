@@ -20,7 +20,7 @@ export const SearchResults = ({ query }: { query: string }) => {
       {data?.items.map((item) => (
         <li
           key={item.id}
-          className="bg-white flex border gap-2 p-2 hover:border-black "
+          className="bg-white flex border gap-2 p-2 hover:border-gray-800 transition-[border] "
         >
           <Link to={`/livro/${item.id}`}>
             <BookCover
@@ -31,7 +31,11 @@ export const SearchResults = ({ query }: { query: string }) => {
           </Link>
           <div className="w-full flex flex-col justify-between">
             <div className="w-full">
-              <p className="font-bold">{item.volumeInfo.title}</p>
+              <Link to={`/livro/${item.id}`}>
+                <p className="font-bold hover:underline">
+                  {item.volumeInfo.title}
+                </p>
+              </Link>
               <p>
                 {item.volumeInfo.authors?.length &&
                   `por ${item.volumeInfo.authors.join(', ')}`}

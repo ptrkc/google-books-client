@@ -20,7 +20,7 @@ export interface VolumeInfo {
   authors: string[]
   publisher: string
   publishedDate: string
-  description: string
+  description?: string
   pageCount: number
   printedPageCount: number
   averageRating?: number

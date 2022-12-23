@@ -2,8 +2,8 @@ import { ImageLinks } from '../types/BookResponse'
 import { CameraOffIcon } from './Icons'
 
 const sizes = {
-  sm: 'w-[128px] h-[192px]',
-  lg: 'w-[575px] h-[850px]',
+  sm: 'min-w-[128px] min-h-[192px]',
+  lg: 'min-w-[128px] min-h-[192px] sm:w-[350px] sm:h-[580px]',
 }
 
 export const BookCover = ({
@@ -21,21 +21,14 @@ export const BookCover = ({
     const bestEfficientImage =
       medium ?? large ?? extraLarge ?? small ?? thumbnail ?? smallThumbnail
     return (
-      <div
-        className={[sizes[size], 'relative flex-none overflow-hidden'].join(
-          ' '
-        )}
-      >
-        <div className="bg-gray-400 animate-pulse absolute top-0 bottom-0 right-0 left-0" />
-        <img
-          src={bestEfficientImage}
-          className={[
-            sizes[size],
-            'object-cover flex-none absolute top-0 bottom-0 left-0  right-0',
-          ].join(' ')}
-          alt={`Capa do livro "${title}"`}
-        />
-      </div>
+      <img
+        src={bestEfficientImage}
+        className={[
+          sizes[size],
+          'object-contain bg-gray-200 grow-0 shrink-0 text-sm p-2',
+        ].join(' ')}
+        alt={`Capa do livro "${title}"`}
+      />
     )
   }
 
