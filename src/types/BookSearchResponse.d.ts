@@ -1,6 +1,6 @@
 export interface BookSearchResponse {
-  totalItems: number
-  items: Item[]
+  //totalItems: number // totalItems is unpredictable, better not to trust it
+  items?: Item[]
 }
 
 export interface Item {
