@@ -5,7 +5,7 @@ import { SearchIcon } from './Icons'
 
 const limitSelector = (state: StoreState) => state.limit
 export const AdvancedSearchForm = () => {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const limit = useStore(limitSelector)
   const navigation = useNavigation()
 

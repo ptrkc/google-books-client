@@ -17,10 +17,17 @@ export async function searchPageLoader({ request }: LoaderFunctionArgs) {
   const page = Number(url.searchParams.get('page'))
   const startIndex = page === 0 ? 0 : (page - 1) * limit
   if (query || author) {
-    const queryData = query ?? ''
-    const authorData = author ? `inauthor:${author}` : ''
+    const textSearch = query ?? null
+    const authorSearch = author ? `inauthor:${author}` : null
+    const formattedApiQuery = [textSearch, authorSearch]
+      .filter((search) => search !== null)
+      .join('+')
+      .replaceAll(' ', '+')
+    console.log(
+      `${API_URL}volumes?q=${formattedApiQuery}&startIndex=${startIndex}&maxResults=${limit}`
+    )
     const data = await fetchData<BookSearchResponse>(
-      `${API_URL}volumes?q=${queryData}${authorData}&startIndex=${startIndex}&maxResults=${limit}`
+      `${API_URL}volumes?q=${formattedApiQuery}&startIndex=${startIndex}&maxResults=${limit}`
     )
     return data
   }

@@ -8,6 +8,7 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('Should allow me to ...', () => {
   test('Should allow me to search for a book', async ({ page }) => {
+    await page.goto('http://localhost:5173/')
     const input = page.getByPlaceholder('O Senhor dos Anéis')
     await input.type('Harry Potter')
     await input.press('Enter')
@@ -26,7 +27,19 @@ test.describe('Should allow me to ...', () => {
     await expect(page).toHaveURL('http://localhost:5173/livro/-bF2CwAAQBAJ')
   })
 
+  test('Should allow me to search for an author', async ({ page }) => {
+    await page.goto('http://localhost:5173/buscar')
+    const input = page.getByPlaceholder('Tolkien')
+    await input.type('Tolkien')
+    await input.press('Enter')
+    await expect(page).toHaveURL(
+      'http://localhost:5173/buscar?query=&author=Tolkien&limit=10&page=1'
+    )
+    await expect(page.getByRole('listitem')).toHaveCount(10)
+  })
+
   test('Should save advanced search params', async ({ page }) => {
+    await page.goto('http://localhost:5173/')
     const input = page.getByPlaceholder('O Senhor dos Anéis')
     await input.type('Harry Potter')
     await input.press('Enter')
@@ -60,15 +73,13 @@ test.describe('Should allow me to ...', () => {
     )
   })
   test('Should save favorites, and delete them.', async ({ page }) => {
-    await page.goto('http://localhost:5173/')
-    await page.getByPlaceholder('O Senhor dos Anéis').click()
-    await page.getByPlaceholder('O Senhor dos Anéis').fill('habit')
-    await page.getByPlaceholder('O Senhor dos Anéis').press('Enter')
+    await page.goto(
+      'http://localhost:5173/buscar?query=O+poder+do+h%C3%A1bito&author=Charles+Duhigg&limit=10&page=1'
+    )
     await page
       .getByRole('listitem')
       .filter({
-        hasText:
-          'O poder do hábitopor Charles Duhigg⭐⭐⭐⭐⭐ (6)FavoritarInformações',
+        hasText: 'O poder do hábito',
       })
       .getByRole('button', { name: 'Favoritar' })
       .click()
@@ -76,60 +87,54 @@ test.describe('Should allow me to ...', () => {
     await page
       .getByRole('listitem')
       .filter({
-        hasText:
-          'O poder do hábitopor Charles Duhigg⭐⭐⭐⭐⭐ (6)FavoritarInformações',
+        hasText: 'O poder do hábito',
       })
       .getByRole('button', { name: 'Favoritar' })
       .click()
     await page.getByRole('link', { name: '⭐Favoritos' }).click()
-    await page.getByRole('button', { name: 'Remover' }).click()
+    await page
+      .getByRole('listitem')
+      .filter({
+        hasText: 'O poder do hábito',
+      })
+      .getByRole('button', { name: 'Remover' })
+      .click()
+    await page
+      .getByText(
+        'Adicione livros aos seus favoritos para que eles apareçam aqui.'
+      )
+      .click()
   })
   test('Should show how many books I`ve added to favorites.', async ({
     page,
   }) => {
-    await page.getByPlaceholder('O Senhor dos Anéis').click()
-    await page.getByPlaceholder('O Senhor dos Anéis').fill('habit')
-    await page.getByPlaceholder('O Senhor dos Anéis').press('Enter')
+    await page.goto('http://localhost:5173/buscar?query=livro&limit=10&page=1')
     await page
       .getByRole('listitem')
-      .filter({
-        hasText:
-          'The Coaching Habitpor Michael Bungay Stanier⭐⭐⭐⭐ (2)FavoritarInformações',
-      })
+      .nth(0)
       .getByRole('button', { name: 'Favoritar' })
       .click()
     await page
       .getByRole('listitem')
-      .filter({
-        hasText:
-          'The Leader Habitpor Martin Lanik⭐⭐⭐⭐⭐ (1)FavoritarInformações',
-      })
+      .nth(1)
       .getByRole('button', { name: 'Favoritar' })
       .click()
     await page
       .getByRole('listitem')
-      .filter({
-        hasText: 'The Now Habitpor Neil Fiore⭐⭐⭐⭐ (9)FavoritarInformações',
-      })
+      .nth(2)
       .getByRole('button', { name: 'Favoritar' })
       .click()
     await page.getByRole('link', { name: '⭐Favoritos' }).click()
     await page.getByRole('heading', { name: '⭐Favoritos (3)' }).click()
     await page
       .getByRole('listitem')
-      .filter({
-        hasText:
-          'The Coaching Habitpor Michael Bungay Stanier⭐⭐⭐⭐ (2)RemoverInformações',
-      })
+      .nth(0)
       .getByRole('button', { name: 'Remover' })
       .click()
     await page.getByRole('heading', { name: '⭐Favoritos (2)' }).click()
     await page
       .getByRole('listitem')
-      .filter({
-        hasText:
-          'The Leader Habitpor Martin Lanik⭐⭐⭐⭐⭐ (1)RemoverInformações',
-      })
+      .nth(1)
       .getByRole('button', { name: 'Remover' })
       .click()
     await page.getByRole('heading', { name: '⭐Favoritos (1)' }).click()
@@ -148,5 +153,34 @@ test.describe('Should allow me to ...', () => {
       'http://localhost:5173/buscar?query=wdhshdfjf&author=wdhshdfjf&limit=10&page=1'
     )
     await expect(page.getByText('Nenhum resultado')).toBeVisible()
+  })
+  test('Should paginate search results', async ({ page }) => {
+    await page.goto(
+      'http://localhost:5173/buscar?query=O+poder+do+h%C3%A1bito&author=Charles+Duhigg&limit=10&page=1'
+    )
+    await expect(
+      page.getByRole('button', { name: 'previous page' })
+    ).toBeDisabled()
+    await expect(page.getByRole('button', { name: 'next page' })).toBeDisabled()
+
+    await page.goto(
+      'http://localhost:5173/buscar?query=O+Senhor+dos+An%C3%A9is&author=Tolkien&limit=30&page=1'
+    )
+    await expect(
+      page.getByRole('button', { name: 'previous page' })
+    ).toBeDisabled()
+    await expect(page.getByRole('button', { name: 'next page' })).toBeEnabled()
+    await page.getByRole('button', { name: 'next page' }).click()
+    await expect(page).toHaveURL(
+      'http://localhost:5173/buscar?query=O+Senhor+dos+An%C3%A9is&author=Tolkien&limit=30&page=2'
+    )
+    await expect(
+      page.getByRole('button', { name: 'previous page' })
+    ).toBeEnabled()
+    await expect(page.getByRole('button', { name: 'next page' })).toBeDisabled()
+    await page.getByRole('button', { name: 'previous page' }).click()
+    await expect(page).toHaveURL(
+      'http://localhost:5173/buscar?query=O+Senhor+dos+An%C3%A9is&author=Tolkien&limit=30&page=1'
+    )
   })
 })
