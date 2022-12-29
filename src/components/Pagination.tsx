@@ -8,17 +8,12 @@ const limitSelector = (state: StoreState) => state.limit
 export function Pagination({ itemCount }: { itemCount: number }) {
   const [searchParams, setSearchParams] = useSearchParams()
   const page = Number(searchParams.get('page'))
-  const limit = useStore(limitSelector)
-  const isAtEnd = itemCount < limit
+  const isAtEnd = itemCount < useStore(limitSelector)
 
   const changePage = (action: 'next' | 'prev') => {
-    const newPage = String(action === 'next' ? page + 1 : page - 1)
-    const params = createSearchParams({
-      query: searchParams.get('query') ?? '',
-      page: newPage,
-      limit: String(limit),
-    })
-    setSearchParams(params)
+    const newParams = createSearchParams(searchParams)
+    newParams.set('page', String(action === 'next' ? page + 1 : page - 1))
+    setSearchParams(newParams)
   }
 
   return (
