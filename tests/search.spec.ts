@@ -154,4 +154,33 @@ test.describe('Should allow me to ...', () => {
     )
     await expect(page.getByText('Nenhum resultado')).toBeVisible()
   })
+  test('Should paginate search results', async ({ page }) => {
+    await page.goto(
+      'http://localhost:5173/buscar?query=O+poder+do+h%C3%A1bito&author=Charles+Duhigg&limit=10&page=1'
+    )
+    await expect(
+      page.getByRole('button', { name: 'previous page' })
+    ).toBeDisabled()
+    await expect(page.getByRole('button', { name: 'next page' })).toBeDisabled()
+
+    await page.goto(
+      'http://localhost:5173/buscar?query=O+Senhor+dos+An%C3%A9is&author=Tolkien&limit=30&page=1'
+    )
+    await expect(
+      page.getByRole('button', { name: 'previous page' })
+    ).toBeDisabled()
+    await expect(page.getByRole('button', { name: 'next page' })).toBeEnabled()
+    await page.getByRole('button', { name: 'next page' }).click()
+    await expect(page).toHaveURL(
+      'http://localhost:5173/buscar?query=O+Senhor+dos+An%C3%A9is&author=Tolkien&limit=30&page=2'
+    )
+    await expect(
+      page.getByRole('button', { name: 'previous page' })
+    ).toBeEnabled()
+    await expect(page.getByRole('button', { name: 'next page' })).toBeDisabled()
+    await page.getByRole('button', { name: 'previous page' }).click()
+    await expect(page).toHaveURL(
+      'http://localhost:5173/buscar?query=O+Senhor+dos+An%C3%A9is&author=Tolkien&limit=30&page=1'
+    )
+  })
 })

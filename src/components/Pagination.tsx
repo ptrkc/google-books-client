@@ -19,12 +19,14 @@ export function Pagination({ itemCount }: { itemCount: number }) {
   return (
     <div className="flex gap-2 justify-center items-center">
       <IconButton
+        aria-label="previous page"
         icon={<ArrowLeftIcon />}
         disabled={page === 1}
         onClick={() => changePage('prev')}
       />
       <span>Página {page}</span>
       <IconButton
+        aria-label="next page"
         icon={<ArrowRightIcon />}
         disabled={isAtEnd}
         onClick={() => changePage('next')}
